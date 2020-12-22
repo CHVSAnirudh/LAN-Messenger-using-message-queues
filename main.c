@@ -701,14 +701,21 @@ void menu()
 {
 	int option;
 	blue();
-	printf("\n\n\n1.Profile settings \n2.Chat with a friend \n3.add a contact \n4.View people who are online \nany other key to exit\n");
+	printf("\n\n\n1.Profile settings \n2.Chat with a friend \n3.add a contact \n4.View people who are online\n5.Send a Secured Message \n6.To exit\n");
 	reset();
 	if(wait>1)
 		{
 			while (wait>1)
 			{}
-		}
+		}	
+	sleep(1);
 	scanf("%d",&option);
+	if(wait>1)
+		{
+			while (wait>1)
+			{}
+		}
+
 	if(option == 1)
 		profile();
 	else if(option == 2)
@@ -726,8 +733,34 @@ void menu()
 	reset();
 	menu();
 		}
-	else 
+	else if(option == 5)
+		{	int opt=0;
+		  //system("sudo ./Sser 8080");
+		  system("clear");
+		  printf("1.Be the host\n2.Connect to the host\n");
+		  scanf("%d",&opt);
+		  if(opt == 1)
+		  	{
+		  		system("sudo ./Sser 8080");
+		  	}
+		  else if(opt == 2)
+		  {
+		  	system("clear");
+		  	system("./Sclient 127.0.0.1 8080");
+		  }	
+		  
+		}
+	else if(option == 6)
 		exit(0);
+	else{
+		printf("\nentered the wrong value... pls try again:");
+		menu();
+	}
+	if(wait>1)
+		{
+			while (wait>1)
+			{}
+		}
 	return;
 }
 
@@ -804,6 +837,13 @@ void Cpin()
 				x=fopen("pin.txt","a");
 				printf("Enter the new 4 digit pin: ");
 				scanf("%s",pswd);
+				for(int i=0;i<4;i++)
+					if(pswd[i]>=48 && pswd[i]<=58)
+						continue;
+				 	else
+				 	{	printf("Only digits allowed...");
+				 		Cpin();
+				 	}
 				fprintf(x,pswd);
 				fclose(x);
 			printf("\nPin successfully changed.");
